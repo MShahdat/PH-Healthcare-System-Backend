@@ -28,7 +28,8 @@
 			},
 			"style": {
 				"noNonNullAssertion": "off",
-				"useNodejsImportProtocol": "info"
+				"useNodejsImportProtocol": "info",
+				"useImportType": "off"
 			}
 		}
 	},

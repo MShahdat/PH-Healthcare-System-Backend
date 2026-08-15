@@ -5,9 +5,10 @@ import { sendResponse } from "../../utils/sendResponse";
 import type { IRequestUser } from "./auth.interface";
 import { AuthService } from "./auth.service";
 
+
 //& REGISTER USER
 const registerPatient = catchAsync(async (req: Request, res: Response) => {
-	const payload = req.body;
+	const payload = req.body
 	const result = await AuthService.registerPatient(payload);
 
 	const { accessToken, refreshToken, user, patient } = result;
@@ -37,6 +38,10 @@ const registerPatient = catchAsync(async (req: Request, res: Response) => {
 		},
 	});
 });
+
+
+
+
 
 //& LOGIN USER
 const loginUser = catchAsync(async (req: Request, res: Response) => {
@@ -68,6 +73,10 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+
+
+
+
 //& GET ME
 const getMe = catchAsync(async (req: Request, res: Response) => {
 	const user = req.user as unknown as IRequestUser;
@@ -84,6 +93,9 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
 		data: result,
 	});
 });
+
+
+
 
 //& CREATE ACCESS TOKEN
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
@@ -117,6 +129,9 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+
+
+
 //& GOOGLE LOGIN
 const googleLogin = catchAsync(async (req: Request, res: Response) => {
 	const body = req.body;
@@ -147,6 +162,8 @@ const googleLogin = catchAsync(async (req: Request, res: Response) => {
 		},
 	});
 });
+
+
 
 export const AuthController = {
 	registerPatient,
