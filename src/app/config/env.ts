@@ -28,6 +28,9 @@ const config = {
 	radis_password: process.env.RADIS_PASSWORD!,
 	radis_host: process.env.RADIS_HOST!,
 	radis_port: process.env.RADIS_PORT!,
+	smtp_user: process.env.SMTP_USER!,
+	smtp_sender: process.env.SMTP_SENDER!,
+	smtp_password: process.env.SMTP_PASSWORD!,
 };
 
 export default config;

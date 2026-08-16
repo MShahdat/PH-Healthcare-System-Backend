@@ -1,5 +1,6 @@
 import app from "./app";
 import config from "./app/config/env";
+import { transporter } from "./app/lib/nodemailer";
 
 import { prisma } from "./app/lib/prisma";
 import { redisClient } from "./app/lib/redis";
@@ -17,6 +18,8 @@ const main = async () => {
 		console.log("Connected to the database successfully.");
 		await redisClient.connect();
 		console.log("readis connected successfully.");
+		await transporter.verify();
+		console.log("nodemailer connected successfully.");
 		app.listen(PORT, () => {
 			console.log(`server is running port ${PORT}`);
 		});
