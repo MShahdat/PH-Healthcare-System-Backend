@@ -8,6 +8,7 @@ import {
 	loginZodSchema,
 	PatientRegisterZodSchema,
 	resetPasswordZodSchema,
+	VerifyEmailZodSchema,
 } from "./authValidation";
 
 const router = Router();
@@ -17,6 +18,12 @@ router.post(
 	zodValidation(PatientRegisterZodSchema),
 	AuthController.registerPatient,
 );
+router.post(
+	"/verify-email",
+	zodValidation(VerifyEmailZodSchema),
+	AuthController.verifyEmail,
+);
+
 router.post("/login", zodValidation(loginZodSchema), AuthController.loginUser);
 router.get(
 	"/me",
