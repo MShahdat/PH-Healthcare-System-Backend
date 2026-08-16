@@ -11,6 +11,8 @@ import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import { notFound } from "./app/middleware/notFound";
 import { AuthRoutes } from "./app/module/auth/auth.route";
 import z, { success } from "zod";
+import { redisClient } from "./app/lib/redis";
+import crypto from "crypto";
 
 const app: Application = express();
 
@@ -35,30 +37,31 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.use("/api/v1/auth", AuthRoutes);
 
-
-// app.post('/zod', async (req: Request, res: Response, next: NextFunction) => {
-// 	try {
-// 		const User = z.object({
-// 			name: z.string().toUpperCase(),
-// 			email: z.email(),
-// 			password: z.string().normalize()
-// 		})
-
-// 		const payload = req.body
-
-// 		const result = User.parse(payload)
-
-// 		console.log(result)
-// 		res.status(200).json({
-// 			success: true,
-// 			data: result
-// 		})
-
-// 	} catch (error) {
-// 		console.log(error)
-// 		next(error)
-// 	}
-// });
+//! testing purpose
+app.get("/redis", async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const otp = crypto.randomInt(10000, 1000000);
+		// await redisClient.set('forgot-password-otp:patient1@gmail.com', '123456', {
+		// 	expiration: {
+		// 		type: "EX",
+		// 		value: 60
+		// 	}
+		// })
+		// await redisClient.set('forgot-password-otp:patient2@gmail.com', '654321', {
+		// 	expiration: {
+		// 		type: "EX",
+		// 		value: 60
+		// 	}
+		// })
+		res.status(200).json({
+			success: true,
+			data: otp,
+		});
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+});
 
 app.use(globalErrorHandler);
 app.use(notFound);
