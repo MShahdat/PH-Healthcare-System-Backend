@@ -13,6 +13,7 @@ import { AuthRoutes } from "./app/module/auth/auth.route";
 import z, { success } from "zod";
 import { redisClient } from "./app/lib/redis";
 import crypto from "crypto";
+import { userRouter } from "./app/module/user/user.route";
 
 const app: Application = express();
 
@@ -36,6 +37,10 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.use("/api/v1/auth", AuthRoutes);
+app.use('/api/v1/user', userRouter)
+
+
+
 
 //! testing purpose
 app.get("/redis", async (req: Request, res: Response, next: NextFunction) => {

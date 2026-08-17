@@ -3,6 +3,8 @@ model User {
   name               String
   email              String
   password           String?
+  imagePublicId      String       @default("")
+  imageURL           String       @default("")
   googleId           String?      @unique
   authProvider       AuthProvider @default(CREADENTIAL)
   emailVerified      Boolean      @default(false)
