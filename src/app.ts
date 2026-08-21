@@ -10,9 +10,6 @@ import cookieParser from "cookie-parser";
 import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import { notFound } from "./app/middleware/notFound";
 import { AuthRoutes } from "./app/module/auth/auth.route";
-import z, { success } from "zod";
-import { redisClient } from "./app/lib/redis";
-import crypto from "crypto";
 import { userRouter } from "./app/module/user/user.route";
 import { getBkashIdToken } from "./app/lib/bkash";
 import { appointmentRouter } from "./app/module/appointment/appointment.route";
@@ -40,7 +37,7 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/user", userRouter);
-app.use('/api/v1/appointment', appointmentRouter);
+app.use("/api/v1/appointment", appointmentRouter);
 
 //! testing purpose
 app.get("/test", async (req: Request, res: Response, next: NextFunction) => {
@@ -48,7 +45,9 @@ app.get("/test", async (req: Request, res: Response, next: NextFunction) => {
 		const response = await getBkashIdToken();
 		res.status(200).json({
 			success: true,
-			data: response,
+			data: {
+				id_token: response,
+			},
 		});
 	} catch (error) {
 		console.log(error);

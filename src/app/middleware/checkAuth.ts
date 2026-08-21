@@ -5,16 +5,12 @@ import { catchAsync } from "../utils/catchAsync";
 import { jwtUtils } from "../utils/jwt";
 import type { Role } from "../../../generated/prisma/enums";
 import config from "../config/env";
+import { IRequestUser } from "../module/auth/auth.interface";
 
 declare global {
 	namespace Express {
 		interface Request {
-			user?: {
-				email: string;
-				name: string;
-				userId: string;
-				role: Role;
-			};
+			user?: IRequestUser;
 		}
 	}
 }

@@ -11,13 +11,21 @@ export const getBkashIdToken = async () => {
 	const redisRefreshToken = await redisClient.get(redisRefreshKey);
 	const redisRefreshTokenTTL = await redisClient.ttl(redisRefreshKey);
 
-  console.log('redis id token ttl and refres token ttl ', redisIdTokenTTL, redisRefreshTokenTTL)
+	console.log(
+		"redis id token ttl and refres token ttl ",
+		redisIdTokenTTL,
+		redisRefreshTokenTTL,
+	);
 
 	if (redisIdToken && redisIdTokenTTL > 600) {
 		return redisIdToken;
 	}
 
-	if (redisIdTokenTTL <= 600 && redisRefreshToken && redisRefreshTokenTTL > 600) {
+	if (
+		redisIdTokenTTL <= 600 &&
+		redisRefreshToken &&
+		redisRefreshTokenTTL > 600
+	) {
 		const res = await fetch(
 			`${config.bkash_base_url}/tokenized/checkout/token/refresh`,
 			{
@@ -48,22 +56,23 @@ export const getBkashIdToken = async () => {
 	}
 
 	const res = await fetch(
-		`${config.bkash_base_url}/tokenized/checkout/token/grant`,{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          username: config.bkash_username,
-          password: config.bkash_password,
-        },
-        body: JSON.stringify({
-          app_key: config.bkash_app_key,
-          app_secret: config.bkash_app_secret,
-        }),
+		`${config.bkash_base_url}/tokenized/checkout/token/grant`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				username: config.bkash_username,
+				password: config.bkash_password,
+			},
+			body: JSON.stringify({
+				app_key: config.bkash_app_key,
+				app_secret: config.bkash_app_secret,
+			}),
 		},
 	);
-  
-  if (res.ok) {
+
+	if (res.ok) {
 		const data = await res.json();
 
 		await redisClient.set(redisIdTokenKey, data.id_token, {
