@@ -11,8 +11,13 @@ route.post(
 	appointmentController.bookAppointment,
 );
 
+route.post("/payment", auth(Role.PATIENT), appointmentController.createpayment);
 
-route.post('/payment', auth(Role.PATIENT), appointmentController.createpayment)
+route.post(
+	"/cancel-appointment",
+	auth(Role.PATIENT),
+	appointmentController.cancelAppointment,
+);
 
 route.get(
 	"/book-appointment/payment/callback",

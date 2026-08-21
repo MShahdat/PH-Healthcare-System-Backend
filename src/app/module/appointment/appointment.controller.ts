@@ -19,7 +19,6 @@ const bookAppointment = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
-
 //& PAYMENT CREATE
 const createpayment = catchAsync(async (req: Request, res: Response) => {
 	const body = req.body;
@@ -35,6 +34,20 @@ const createpayment = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+//& CANCEL APPOINTMENT & REFUNDED PAYMENT
+const cancelAppointment = catchAsync(async (req: Request, res: Response) => {
+	const body = req.body;
+	const user = req.user!;
+
+	const result = await appointmentService.cancelAppointment(body, user);
+
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: `cancel appointment and refund payment successfully`,
+		data: result,
+	});
+});
 
 //& BOOK APPOINTMENT CALLBACK
 const bookAppointmentCallback = catchAsync(
@@ -51,6 +64,7 @@ const bookAppointmentCallback = catchAsync(
 
 export const appointmentController = {
 	bookAppointment,
-  createpayment,
+	createpayment,
 	bookAppointmentCallback,
+	cancelAppointment,
 };
