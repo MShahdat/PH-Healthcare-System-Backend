@@ -123,6 +123,17 @@ export const seedTesterDoctor = async () => {
 				emailVerified: true,
 				needPasswordChange: false,
 				role: Role.DOCTOR,
+				doctor: {
+					create: {
+						email,
+						name,
+						licenceNumber: 'BMDA1010',
+						qualifications: 'MBBS-BCS(Health)',
+						resume: '',
+						specialization: 'Cardiology',
+						// additionalFiles: [""],
+					}
+				}
 			},
 		});
 
